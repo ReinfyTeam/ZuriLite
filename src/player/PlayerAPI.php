@@ -120,6 +120,10 @@ class PlayerAPI implements IPlayerAPI {
 		$this->actionBreakingSpecial = $data;
 	}
 
+	public function isCurrentChunkIsLoaded() : bool {
+		return $this->getPlayer()->getWorld()->isChunkLoaded($this->getPlayer()->getLocation()->getX(), $this->getPlayer()->getLocation()->getZ());
+	}
+
 	//Place many blocks just one time place (This can check FILLBLOCK PLAYER)
 	public function actionPlacingSpecial() : bool {
 		return $this->actionPlacingSpecial;

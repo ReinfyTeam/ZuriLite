@@ -63,7 +63,8 @@ class FlyC extends Check {
 				$playerAPI->isOnAdhesion() ||
 				$player->getAllowFlight() ||
 				$player->hasNoClientPredictions() ||
-				!$player->isSurvival()
+				!$player->isSurvival() ||
+				!$playerAPI->isCurrentChunkIsLoaded()
 			) { // additional checks
 				return;
 			}
