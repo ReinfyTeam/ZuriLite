@@ -22,10 +22,10 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\events;
+namespace ReinfyTeam\ZuriLite\events;
 
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\discord\Discord;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\discord\Discord;
 
 class BanEvent {
 	private PlayerAPI $player;

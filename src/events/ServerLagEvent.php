@@ -22,13 +22,13 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\events;
+namespace ReinfyTeam\ZuriLite\events;
 
 use pocketmine\Server;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\discord\Discord;
-use ReinfyTeam\Zuri\utils\ReplaceText;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\discord\Discord;
+use ReinfyTeam\ZuriLite\utils\ReplaceText;
 
 class ServerLagEvent extends ConfigManager {
 	private PlayerAPI $player;
