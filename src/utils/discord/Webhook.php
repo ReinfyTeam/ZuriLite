@@ -24,8 +24,8 @@ declare(strict_types=1);
 
 namespace ReinfyTeam\ZuriLite\utils\discord;
 
-use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use pocketmine\Server;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function filter_var;
 use function json_encode;
 

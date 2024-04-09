@@ -26,10 +26,10 @@ namespace ReinfyTeam\ZuriLite\utils\discord;
 
 use DateTime;
 use pocketmine\utils\Config;
-use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use ReinfyTeam\ZuriLite\config\ConfigManager;
 use ReinfyTeam\ZuriLite\player\PlayerAPI;
 use ReinfyTeam\ZuriLite\utils\ReplaceText;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function hexdec;
 use function str_replace;
 
