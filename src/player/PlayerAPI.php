@@ -122,7 +122,7 @@ class PlayerAPI implements IPlayerAPI {
 	}
 
 	public function isCurrentChunkIsLoaded() : bool {
-		return $this->getPlayer()->getWorld()->isChunkLoaded(intval($this->getPlayer()->getLocation()->getX()), intval($this->getPlayer()->getLocation()->getZ()));
+		return $this->getPlayer()->getWorld()->isInLoadedTerrain($this->getPlayer()->getLocation());
 	}
 
 	//Place many blocks just one time place (This can check FILLBLOCK PLAYER)
