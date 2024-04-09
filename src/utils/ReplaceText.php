@@ -44,8 +44,6 @@ class ReplaceText extends ConfigManager {
 			"{subtype}",
 			"{time}",
 			"{violation}",
-			"{timechat}",
-			"{code}",
 			"{tps}",
 			"{error_code}"
 		];
@@ -56,8 +54,6 @@ class ReplaceText extends ConfigManager {
 			$subType,
 			date("F d, Y h:i:sA", time()),
 			(is_string($player) ? "N/A" : $player->getRealViolation($module)),
-			self::getData(self::CHAT_SPAM_DELAY),
-			(is_string($player) ? "N/A" : $player->getCaptchaCode()),
 			Server::getInstance()->getTicksPerSecond(),
 			base64_encode(zlib_encode(strtolower($module . $subType . date("F d, Y h:i:sA", time())), ZLIB_ENCODING_DEFLATE, 9))
 		];

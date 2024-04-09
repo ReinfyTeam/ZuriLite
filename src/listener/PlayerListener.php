@@ -37,7 +37,6 @@ use pocketmine\event\inventory\InventoryCloseEvent;
 use pocketmine\event\inventory\InventoryOpenEvent;
 use pocketmine\event\inventory\InventoryTransactionEvent;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\event\player\PlayerItemConsumeEvent;
@@ -386,24 +385,6 @@ class PlayerListener implements Listener {
 			return;
 		}
 		$playerAPI->setDeathTicks(microtime(true));
-	}
-
-	public function onPlayerChat(PlayerChatEvent $event) {
-		$player = $event->getPlayer();
-		if ($player === null) {
-			return;
-		}
-		$playerAPI = PlayerAPI::getAPIPlayer($player);
-		if ($playerAPI->getPlayer() === null) {
-			return;
-		}
-		if (!$player->isConnected() && !$player->spawned) {
-			return;
-		}
-		if ($playerAPI->isCaptcha()) {
-			return;
-		}
-		$this->checkEvent($event, $playerAPI);
 	}
 
 	public function onPlayerItemHeld(PlayerItemHeldEvent $event) {
