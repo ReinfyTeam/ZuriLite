@@ -31,6 +31,7 @@ use pocketmine\player\Player;
 use pocketmine\player\SurvivalBlockBreakHandler;
 use ReflectionProperty;
 use ReinfyTeam\ZuriLite\ZuriLiteAC;
+use function intval;
 use function microtime;
 
 class PlayerAPI implements IPlayerAPI {
@@ -121,7 +122,7 @@ class PlayerAPI implements IPlayerAPI {
 	}
 
 	public function isCurrentChunkIsLoaded() : bool {
-		return $this->getPlayer()->getWorld()->isChunkLoaded($this->getPlayer()->getLocation()->getX(), $this->getPlayer()->getLocation()->getZ());
+		return $this->getPlayer()->getWorld()->isChunkLoaded(intval($this->getPlayer()->getLocation()->getX()), intval($this->getPlayer()->getLocation()->getZ()));
 	}
 
 	//Place many blocks just one time place (This can check FILLBLOCK PLAYER)

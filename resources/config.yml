@@ -127,4 +127,10 @@ zuri:
               ban: false
               kick: true
               flag: false
+         phase:
+              enable: true
+              maxvl: 1
+              ban: false
+              kick: true
+              flag: false
 ...
