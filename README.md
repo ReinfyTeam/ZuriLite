@@ -24,3 +24,4 @@
 | FastEat (A) | Kick (configure) | 100% detect |
 | FastThrow (A) | Kick (configure) | 100% detect | 
 | Phase/NoClip (A) | Kick (configure) | 100% detect |
+| Velocity (A, B) | Kick (configure) | 100% detect |
