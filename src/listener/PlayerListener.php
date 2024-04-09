@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\listener;
+namespace ReinfyTeam\ZuriLite\listener;
 
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
@@ -58,9 +58,9 @@ use pocketmine\network\mcpe\protocol\types\inventory\UseItemOnEntityTransactionD
 use pocketmine\network\mcpe\protocol\types\LevelSoundEvent;
 use pocketmine\player\Player;
 use pocketmine\Server;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\BlockUtil;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\BlockUtil;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function array_filter;
 use function count;
 use function in_array;
@@ -102,9 +102,6 @@ class PlayerListener implements Listener {
 
 	public function onPlayerMove(PlayerMoveEvent $event) : void {
 		$player = $event->getPlayer();
-		if ($player === null) {
-			return;
-		}
 		$playerAPI = PlayerAPI::getAPIPlayer($player);
 		if (!$player->isConnected() && !$player->spawned) {
 			return;
@@ -205,9 +202,6 @@ class PlayerListener implements Listener {
 		$x = $block->getPosition()->getX();
 		$z = $block->getPosition()->getZ();
 		$player = $event->getPlayer();
-		if ($player === null) {
-			return;
-		}
 		$playerAPI = PlayerAPI::getAPIPlayer($player);
 		if ($playerAPI->getPlayer() === null) {
 			return;
@@ -246,9 +240,6 @@ class PlayerListener implements Listener {
 
 	public function onInventoryTransaction(InventoryTransactionEvent $event) {
 		$player = $event->getTransaction()->getSource();
-		if ($player === null) {
-			return;
-		}
 		$playerAPI = PlayerAPI::getAPIPlayer($player);
 		if ($playerAPI->getPlayer() === null) {
 			return;
@@ -514,7 +505,7 @@ class PlayerListener implements Listener {
 			return;
 		}
 
-		foreach (ZuriAC::Checks() as $class) {
+		foreach (ZuriLiteAC::Checks() as $class) {
 			if ($class->enable()) {
 				$class->checkEvent($event, $playerAPI);
 			}
@@ -527,7 +518,7 @@ class PlayerListener implements Listener {
 			return;
 		}
 
-		foreach (ZuriAC::Checks() as $class) {
+		foreach (ZuriLiteAC::Checks() as $class) {
 			if ($class->enable()) {
 				$class->check($packet, $playerAPI);
 			}
@@ -535,7 +526,7 @@ class PlayerListener implements Listener {
 	}
 
 	private function checkJustEvent(Event $event) {
-		foreach (ZuriAC::Checks() as $class) {
+		foreach (ZuriLiteAC::Checks() as $class) {
 			if ($class->enable()) {
 				$class->checkJustEvent($event);
 			}

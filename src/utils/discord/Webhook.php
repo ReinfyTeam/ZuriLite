@@ -22,10 +22,9 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils\discord;
+namespace ReinfyTeam\ZuriLite\utils\discord;
 
 use pocketmine\Server;
-use ReinfyTeam\Zuri\ZuriAC;
 use function filter_var;
 use function json_encode;
 
@@ -46,6 +45,6 @@ class Webhook {
 
 	public function send(Message $message) : void {
 		Server::getInstance()->getAsyncPool()->submitTask(new WebhookSendTask($this, $message));
-		ZuriAC::getInstance()->getLogger()->debug("[Discord] [DEBUG]: Sending to discord with data: " . json_encode($message));
+		ZuriLite::getInstance()->getLogger()->debug("[Discord] [DEBUG]: Sending to discord with data: " . json_encode($message));
 	}
 }

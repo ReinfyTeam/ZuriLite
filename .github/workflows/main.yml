@@ -27,7 +27,7 @@ jobs:
      - name: Upload build artifact
        uses: actions/upload-artifact@v4
        with:
-          name: Zuri.phar
-          path: Zuri.phar
+          name: ZuriLite.phar
+          path: ZuriLite.phar
      - name: Codespace Cleanup
        run: "rm -rf *"

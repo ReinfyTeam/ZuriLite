@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\config;
+namespace ReinfyTeam\ZuriLite\config;
 
 abstract class ConfigPaths {
 	public const PREFIX = "zuri.prefix";
@@ -30,22 +30,10 @@ abstract class ConfigPaths {
 	public const ANTIBOT_MESSAGE = "zuri.antibot.message";
 	public const EDITIONFAKER_MESSAGE = "zuri.editionfaker.message";
 
-	public const NETWORK_LIMIT = "zuri.network.limit";
-	public const NETWORK_MESSAGE = "zuri.network.message";
-
 	public const PING_NORMAL = "zuri.ping.normal";
 	public const PING_LAGGING = "zuri.ping.lagging";
 
-	public const PROXY_ENABLE = "zuri.proxy.enable";
-	public const PROXY_IP = "zuri.proxy.ip";
-	public const PROXY_PORT = "zuri.proxy.port";
-
 	public const VERSION = "zuri.version";
-
-	public const PROCESS_AUTO = "zuri.process.auto";
-
-	public const XRAY_ENABLE = "zuri.xray.enable"; // TODO
-	public const XRAY_DISTANCE = "zuri.xray.distance"; // TODO
 
 	public const ALERTS_MESSAGE = "zuri.alerts.message";
 	public const ALERTS_ENABLE = "zuri.alerts.enable";
@@ -70,22 +58,7 @@ abstract class ConfigPaths {
 
 	public const DISCORD_ENABLE = "zuri.discord.enable";
 
-	public const CAPTCHA_ENABLE = "zuri.captcha.enable";
-	public const CAPTCHA_TEXT = "zuri.captcha.text";
-	public const CAPTCHA_MESSAGE = "zuri.captcha.message";
-	public const CAPTCHA_TIP = "zuri.captcha.tip";
-	public const CAPTCHA_TITLE = "zuri.captcha.title";
-	public const CAPTCHA_RANDOMIZE = "zuri.captcha.randomize";
-	public const CAPTCHA_CODE_LENGTH = "zuri.captcha.code.length";
-
-	public const CHAT_SPAM_TEXT = "zuri.chat.spam.text";
-	public const CHAT_SPAM_DELAY = "zuri.chat.spam.delay";
-	public const CHAT_COMMAND_SPAM_TEXT = "zuri.chat.command.text";
-	public const CHAT_COMMAND_SPAM_DELAY = "zuri.chat.command.delay";
-	public const CHAT_COMMAND_SPAM_COMMANDS = "zuri.chat.command.commands";
-	public const CHAT_REPEAT_TEXT = "zuri.chat.repeat.text";
-
-	public const CHECK = "zuri.check";
+	public const CHECK = "zuri.checks";
 
 	public const DETECTION_ENABLE = "zuri.detection.enable";
 	public const DETECTION_MESSAGE = "zuri.detection.message";

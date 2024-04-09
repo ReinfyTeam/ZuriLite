@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\player;
+namespace ReinfyTeam\ZuriLite\player;
 
 use pocketmine\block\BlockTypeIds;
 use pocketmine\entity\Location;
@@ -30,7 +30,7 @@ use pocketmine\math\Facing;
 use pocketmine\player\Player;
 use pocketmine\player\SurvivalBlockBreakHandler;
 use ReflectionProperty;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function microtime;
 
 class PlayerAPI implements IPlayerAPI {
@@ -90,7 +90,7 @@ class PlayerAPI implements IPlayerAPI {
 	}
 
 	public function getPlayer() : ?Player {
-		return ZuriAC::getInstance()->getServer()->getPlayerExact($this->player);
+		return ZuriLiteAC::getInstance()->getServer()->getPlayerExact($this->player);
 	}
 
 	//Captcha

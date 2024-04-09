@@ -22,11 +22,11 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils;
+namespace ReinfyTeam\ZuriLite\utils;
 
 use pocketmine\Server;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
 use function base64_encode;
 use function date;
 use function is_string;

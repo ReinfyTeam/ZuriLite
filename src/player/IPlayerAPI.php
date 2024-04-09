@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\player;
+namespace ReinfyTeam\ZuriLite\player;
 
 use pocketmine\entity\Location;
 

@@ -35,7 +35,7 @@ copyDirectory($from . "resources", $to . "resources");
 
 yaml_emit_file($to . "plugin.yml", (array) yaml_parse_file($from . "plugin.yml"));
 
-$outputPath = getcwd() . DIRECTORY_SEPARATOR . "Zuri.phar";
+$outputPath = getcwd() . DIRECTORY_SEPARATOR . "ZuriLite.phar";
 
 @unlink($outputPath);
 

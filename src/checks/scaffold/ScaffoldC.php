@@ -22,14 +22,14 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\checks\scaffold;
+namespace ReinfyTeam\ZuriLite\checks\scaffold;
 
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Event;
 use pocketmine\network\mcpe\protocol\DataPacket;
-use ReinfyTeam\Zuri\checks\Check;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\MathUtil;
+use ReinfyTeam\ZuriLite\checks\Check;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\MathUtil;
 use function abs;
 
 class ScaffoldC extends Check {
@@ -39,22 +39,6 @@ class ScaffoldC extends Check {
 
 	public function getSubType() : string {
 		return "C";
-	}
-
-	public function ban() : bool {
-		return false;
-	}
-
-	public function kick() : bool {
-		return true;
-	}
-
-	public function flag() : bool {
-		return false;
-	}
-
-	public function captcha() : bool {
-		return false;
 	}
 
 	public function maxViolations() : int {

@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils;
+namespace ReinfyTeam\ZuriLite\utils;
 
 use pocketmine\utils\TextFormat;
 use function array_keys;

@@ -22,16 +22,16 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils\forms;
+namespace ReinfyTeam\ZuriLite\utils\forms;
 
 use pocketmine\player\Player;
 use pocketmine\utils\NotCloneable;
 use pocketmine\utils\NotSerializable;
 use pocketmine\utils\TextFormat;
-use ReinfyTeam\Zuri\checks\Check;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\checks\Check;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function explode;
 use function intval;
 use function strtolower;
@@ -62,7 +62,7 @@ final class FormSender extends ConfigManager {
 			}
 		});
 
-		$form->setTitle("Zuri AdminUI Manager");
+		$form->setTitle("ZuriLite AdminUI Manager");
 		$form->setContent("Choose what do you want to set..");
 		$form->addButton("Manage Modules");
 		$form->addButton("Modify Captcha");
@@ -87,7 +87,7 @@ final class FormSender extends ConfigManager {
 					break;
 				case 2:
 					self::ManageModules($player, true);
-					ZuriAC::getInstance()->loadChecks();
+					ZuriLiteAC::getInstance()->loadChecks();
 					break;
 			}
 		});
@@ -204,7 +204,7 @@ final class FormSender extends ConfigManager {
 				return;
 			}
 			$info = explode(":", $data);
-			foreach (ZuriAC::Checks() as $check) {
+			foreach (ZuriLiteAC::Checks() as $check) {
 				if ($check->getName() === $info[0] && $check->getSubType() === $info[1]) {
 					self::setData(self::CHECK . "." . strtolower($check->getName()) . ".enable", !self::getData(self::CHECK . "." . strtolower($check->getName()) . ".enable"));
 					self::ToggleModules($player, true);
@@ -216,7 +216,7 @@ final class FormSender extends ConfigManager {
 
 		$form->setTitle("Toggle Modules");
 		$form->setContent(($toggled ? TextFormat::GREEN . "Toggled successfully!" : "Choose what do you want to toggle.."));
-		foreach (ZuriAC::Checks() as $check) {
+		foreach (ZuriLiteAC::Checks() as $check) {
 			$form->addButton(TextFormat::AQUA . $check->getName() . TextFormat::DARK_GRAY . " (" . TextFormat::YELLOW . $check->getSubType() . TextFormat::DARK_GRAY . ")" . "\n" . TextFormat::DARK_GRAY . "Status: " . ($check->enable() ? TextFormat::GREEN . "Enabled" : TextFormat::RED . "Disabled"), 0, "", $check->getName() . ":" . $check->getSubType());
 		}
 		$player->sendForm($form);
@@ -230,7 +230,7 @@ final class FormSender extends ConfigManager {
 			}
 
 			$info = explode(":", $data);
-			foreach (ZuriAC::Checks() as $check) {
+			foreach (ZuriLiteAC::Checks() as $check) {
 				if ($check->getName() === $info[0] && $check->getSubType() === $info[1]) {
 					self::ModuleInformation($player, $check);
 				} else {
@@ -241,7 +241,7 @@ final class FormSender extends ConfigManager {
 
 		$form->setTitle("Pick a Module");
 		$form->setContent("Choose what do you want to pick..");
-		foreach (ZuriAC::Checks() as $check) {
+		foreach (ZuriLiteAC::Checks() as $check) {
 			$form->addButton(TextFormat::AQUA . $check->getName() . TextFormat::DARK_GRAY . " (" . TextFormat::YELLOW . $check->getSubType() . TextFormat::DARK_GRAY . ")" . "\nClick to view information.", 0, "", $check->getName() . ":" . $check->getSubType());
 		}
 		$player->sendForm($form);

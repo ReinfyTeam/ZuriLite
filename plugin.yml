@@ -1,14 +1,14 @@
 ---
-name: Zuri 
-description: A powerful anticheat made to destroy hackers from your server for PocketMine-MP.
-authors: [ReinfyTeam, xqwtxon, xwertxy, UnknownNull]
-version: 1.2.0
-website: "https://github.com/ReinfyTeam/Zuri/"
-src-namespace-prefix: ReinfyTeam\Zuri
-main: ReinfyTeam\Zuri\ZuriAC
+name: ZuriLite
+description: A lightweight anticheat optimized for combat-relative servers!
+authors: [ReinfyTeam, xqwtxon, xwertxy]
+version: 1.0.0
+website: "https://github.com/ReinfyTeam/ZuriLite/"
+src-namespace-prefix: ReinfyTeam\ZuriLite
+main: ReinfyTeam\ZuriLite\ZuriLiteAC
 api: 5.0.0
 permissions:
      zuri.command:
           default: op
-          description: Zuri command.
+          description: ZuriLite command.
 ...

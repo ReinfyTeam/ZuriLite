@@ -22,10 +22,10 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\config;
+namespace ReinfyTeam\ZuriLite\config;
 
 use pocketmine\utils\TextFormat;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function fclose;
 use function file_exists;
 use function rename;
@@ -34,38 +34,38 @@ use function yaml_parse;
 
 class ConfigManager extends ConfigPaths {
 	public static function getData(string $path) {
-		return ZuriAC::getInstance()->getConfig()->getNested($path);
+		return ZuriLiteAC::getInstance()->getConfig()->getNested($path);
 	}
 
 	public static function setData(string $path, $data, bool $reverseColors = false) {
-		ZuriAC::getInstance()->getConfig()->setNested($path, $data);
-		ZuriAC::getInstance()->getConfig()->save();
+		ZuriLiteAC::getInstance()->getConfig()->setNested($path, $data);
+		ZuriLiteAC::getInstance()->getConfig()->save();
 	}
 
 	public static function checkConfig() : void {
-		if (!file_exists(ZuriAC::getInstance()->getDataFolder() . "config.yml")) {
-			ZuriAC::getInstance()->saveResource("config.yml");
+		if (!file_exists(ZuriLiteAC::getInstance()->getDataFolder() . "config.yml")) {
+			ZuriLiteAC::getInstance()->saveResource("config.yml");
 		}
 
-		if (!file_exists(ZuriAC::getInstance()->getDataFolder() . "webhook.yml")) {
-			ZuriAC::getInstance()->saveResource("webhook.yml");
+		if (!file_exists(ZuriLiteAC::getInstance()->getDataFolder() . "webhook.yml")) {
+			ZuriLiteAC::getInstance()->saveResource("webhook.yml");
 		}
 
-		$pluginConfigResource = ZuriAC::getInstance()->getResource("config.yml");
+		$pluginConfigResource = ZuriLiteAC::getInstance()->getResource("config.yml");
 		$pluginConfig = yaml_parse(stream_get_contents($pluginConfigResource));
 		fclose($pluginConfigResource);
-		$config = ZuriAC::getInstance()->getConfig();
-		$log = ZuriAC::getInstance()->getServer()->getLogger();
+		$config = ZuriLiteAC::getInstance()->getConfig();
+		$log = ZuriLiteAC::getInstance()->getServer()->getLogger();
 		if ($pluginConfig == false) {
 			$log->critical(self::getData(self::PREFIX) . TextFormat::RED . " Invalid syntax. Currupted config.yml!");
-			ZuriAC::getInstance()->getServer()->getPluginManager()->disablePlugin(ZuriAC::getInstance());
+			ZuriLiteAC::getInstance()->getServer()->getPluginManager()->disablePlugin(ZuriLiteAC::getInstance());
 			return;
 		}
-		if ($config->getNested("zuri.version") === $pluginConfig["zuri"]["version"]) {
+		if ($config->getNested(self::VERSION) === $pluginConfig["zuri"]["version"]) {
 			return;
 		}
-		@rename(ZuriAC::getInstance()->getDataFolder() . "config.yml", ZuriAC::getInstance()->getDataFolder() . "old-config.yml");
-		ZuriAC::getInstance()->saveResource("config.yml");
+		@rename(ZuriLiteAC::getInstance()->getDataFolder() . "config.yml", ZuriLiteAC::getInstance()->getDataFolder() . "old-config.yml");
+		ZuriLiteAC::getInstance()->saveResource("config.yml");
 		$log->notice(self::getData(self::PREFIX) . TextFormat::RED . " Outdated configuration! Your config will be renamed as old-config.yml to backup your data.");
 	}
 }

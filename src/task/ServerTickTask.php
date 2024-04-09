@@ -22,18 +22,18 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\task;
+namespace ReinfyTeam\ZuriLite\task;
 
 use pocketmine\scheduler\Task;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function microtime;
 
 class ServerTickTask extends Task {
 	private float $tick;
 	private static $instance = null;
-	protected ZuriAC $plugin;
+	protected ZuriLiteAC $plugin;
 
-	public function __construct(ZuriAC $plugin) {
+	public function __construct(ZuriLiteAC $plugin) {
 		$this->plugin = $plugin;
 	}
 

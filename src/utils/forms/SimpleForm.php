@@ -22,7 +22,7 @@
 
 declare(strict_types = 1);
 
-namespace ReinfyTeam\Zuri\utils\forms;
+namespace ReinfyTeam\ZuriLite\utils\forms;
 
 use pocketmine\form\FormValidationException;
 use function count;

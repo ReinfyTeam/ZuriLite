@@ -22,18 +22,18 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\ZuriLite\checks\scaffold;
+namespace ReinfyTeam\ZuriLite\checks\behaivor;
 
-use pocketmine\block\BlockTypeIds;
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Event;
+use pocketmine\event\player\PlayerPreLoginEvent;
+use pocketmine\network\mcpe\protocol\types\DeviceOS;
 use ReinfyTeam\ZuriLite\checks\Check;
-use ReinfyTeam\ZuriLite\player\PlayerAPI;
-use function abs;
+use function explode;
+use function strtoupper;
 
-class ScaffoldA extends Check {
+class AntiBot extends Check {
 	public function getName() : string {
-		return "Scaffold";
+		return "AntiBot";
 	}
 
 	public function getSubType() : string {
@@ -41,23 +41,16 @@ class ScaffoldA extends Check {
 	}
 
 	public function maxViolations() : int {
-		return 2;
+		return 0;
 	}
 
-	public function checkEvent(Event $event, PlayerAPI $playerAPI) : void {
-		if ($event instanceof BlockPlaceEvent) {
-			$block = $event->getBlockAgainst();
-			$posBlock = $block->getPosition();
-			$player = $playerAPI->getPlayer();
-			$loc = $player->getLocation();
-			$itemHand = $playerAPI->getInventory()->getItemInHand();
-			if ($itemHand->getTypeId() === BlockTypeIds::AIR) {
-				$x = abs($posBlock->getX() - $loc->getX());
-				$y = abs($posBlock->getY() - $loc->getY());
-				$z = abs($posBlock->getZ() - $loc->getZ());
-				$this->debug($playerAPI, "x=$x, y=$y, z=$z");
-				if ($x > 1.0 || $y > 1.0 || $z > 1.0) {
-					$this->failed($playerAPI);
+	public function checkJustEvent(Event $event) : void {
+		if ($event instanceof PlayerPreLoginEvent) {
+			$extraData = $event->getPlayerInfo()->getExtraData();
+			if ($extraData["DeviceOS"] === DeviceOS::ANDROID) {
+				$model = explode(" ", $extraData["DeviceModel"], 2)[0];
+				if ($model !== strtoupper($model) && $model !== "") {
+					$event->setKickFlag(0, self::getData(self::ANTIBOT_MESSAGE));
 				}
 			}
 		}

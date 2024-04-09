@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils;
+namespace ReinfyTeam\ZuriLite\utils;
 
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission as PMPermission;
@@ -30,7 +30,7 @@ use pocketmine\permission\PermissionManager as PMPermissionManager;
 use pocketmine\utils\NotCloneable;
 use pocketmine\utils\NotSerializable;
 use pocketmine\utils\SingletonTrait;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 
 class PermissionManager {
 	use NotSerializable;
@@ -47,7 +47,7 @@ class PermissionManager {
 
 	public function register(string $permission, int $permAccess, array $childPermission = []) : void {
 		$this->perm[] = $permission;
-		$perm = new PMPermission($permission, "Zuri Anticheat Custom Permission", $childPermission);
+		$perm = new PMPermission($permission, "ZuriLite Anticheat Custom Permission", $childPermission);
 		$permManager = PMPermissionManager::getInstance();
 		switch($permAccess) {
 			case PermissionManager::USER:
@@ -72,7 +72,7 @@ class PermissionManager {
 
 	public function addPlayerPermissions(Player $player, array $permissions) : void {
 		if ($this->attachment === null) {
-			$this->attachment = $player->addAttachment(ZuriAC::getInstance());
+			$this->attachment = $player->addAttachment(ZuriLiteAC::getInstance());
 		}
 		$this->attachment->setPermissions($permissions);
 		$player->getNetworkSession()->syncAvailableCommands();

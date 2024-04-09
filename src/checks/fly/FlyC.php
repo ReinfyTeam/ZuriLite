@@ -22,14 +22,14 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\checks\fly;
+namespace ReinfyTeam\ZuriLite\checks\fly;
 
 use pocketmine\block\BlockTypeIds;
 use pocketmine\event\Event;
 use pocketmine\event\player\PlayerMoveEvent;
-use ReinfyTeam\Zuri\checks\Check;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\BlockUtil;
+use ReinfyTeam\ZuriLite\checks\Check;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\BlockUtil;
 use function count;
 use function in_array;
 use function intval;
@@ -41,22 +41,6 @@ class FlyC extends Check {
 
 	public function getSubType() : string {
 		return "C";
-	}
-
-	public function ban() : bool {
-		return false;
-	}
-
-	public function kick() : bool {
-		return true;
-	}
-
-	public function flag() : bool {
-		return false;
-	}
-
-	public function captcha() : bool {
-		return false;
 	}
 
 	public function maxViolations() : int {

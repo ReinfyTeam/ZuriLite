@@ -22,39 +22,57 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\ZuriLite\checks\scaffold;
+namespace ReinfyTeam\ZuriLite\checks\behaivor;
 
-use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Event;
+use pocketmine\event\player\PlayerItemConsumeEvent;
+use pocketmine\item\ConsumableItem;
+use pocketmine\network\mcpe\protocol\ActorEventPacket;
 use pocketmine\network\mcpe\protocol\DataPacket;
+use pocketmine\network\mcpe\protocol\types\ActorEvent;
 use ReinfyTeam\ZuriLite\checks\Check;
 use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use function microtime;
 
-class ScaffoldB extends Check {
+class FastEat extends Check {
 	public function getName() : string {
-		return "Scaffold";
+		return "FastEat";
 	}
 
 	public function getSubType() : string {
-		return "D";
+		return "A";
 	}
 
 	public function maxViolations() : int {
-		return 1;
+		return 5;
 	}
 
 	public function check(DataPacket $packet, PlayerAPI $playerAPI) : void {
+		if ($packet instanceof ActorEventPacket) {
+			if ($packet->eventId === ActorEvent::EATING_ITEM) {
+				$lastTick = $playerAPI->getExternalData("lastTickP");
+				if ($lastTick === null) {
+					$playerAPI->setExternalData("lastTickP", microtime(true));
+				}
+				$this->debug($playerAPI, "lastTick=$lastTick");
+			}
+		}
 	}
 
 	public function checkEvent(Event $event, PlayerAPI $playerAPI) : void {
-		if ($event instanceof BlockPlaceEvent) {
-			$player = $playerAPI->getPlayer();
-			if ($player === null) {
-				return;
-			}
-			$this->debug($playerAPI, "isItemInHandNull=" . $playerAPI->getPlayer()->getInventory()->getItemInHand()->isNull());
-			if ($playerAPI->getPlayer()->getInventory()->getItemInHand()->isNull()) {
-				$this->failed($playerAPI);
+		if ($event instanceof PlayerItemConsumeEvent) {
+			if ($event->getItem() instanceof ConsumableItem) {
+				$lastTick = $playerAPI->getExternalData("lastTickP");
+				if ($lastTick !== null) {
+					$diff = microtime(true) - $lastTick;
+					$ping = $playerAPI->getPing();
+					if ($diff < 1.5 && $ping < self::getData(self::PING_LAGGING)) {
+						$event->cancel();
+						$this->failed($playerAPI);
+						$playerAPI->unsetExternalData("lastTickP");
+					}
+					$this->debug($playerAPI, "lastTick=$lastTick, diff=$diff");
+				}
 			}
 		}
 	}

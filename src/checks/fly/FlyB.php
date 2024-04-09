@@ -22,12 +22,12 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\checks\fly;
+namespace ReinfyTeam\ZuriLite\checks\fly;
 
 use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\network\mcpe\protocol\UpdateAdventureSettingsPacket;
-use ReinfyTeam\Zuri\checks\Check;
-use ReinfyTeam\Zuri\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\checks\Check;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
 
 class FlyB extends Check {
 	public function getName() : string {
@@ -36,22 +36,6 @@ class FlyB extends Check {
 
 	public function getSubType() : string {
 		return "B";
-	}
-
-	public function ban() : bool {
-		return false;
-	}
-
-	public function kick() : bool {
-		return true;
-	}
-
-	public function flag() : bool {
-		return false;
-	}
-
-	public function captcha() : bool {
-		return false;
 	}
 
 	public function maxViolations() : int {

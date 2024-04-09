@@ -22,14 +22,14 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\task;
+namespace ReinfyTeam\ZuriLite\task;
 
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 use pocketmine\utils\Internet;
 use pocketmine\utils\TextFormat;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\config\ConfigPaths;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\config\ConfigPaths;
 use function date;
 use function json_decode;
 use function strtotime;
@@ -42,7 +42,7 @@ class UpdateCheckerAsyncTask extends AsyncTask {
 	}
 
 	public function onRun() : void {
-		$result = Internet::getURL("https://api.github.com/repos/ReinfyTeam/Zuri/releases/latest", 10, [], $err); // idk why i use github for this..
+		$result = Internet::getURL("https://api.github.com/repos/ReinfyTeam/ZuriLite/releases/latest", 10, [], $err); // idk why i use github for this..
 		$this->setResult([$result ?? null, $err]);
 	}
 
@@ -79,7 +79,7 @@ class UpdateCheckerAsyncTask extends AsyncTask {
 		if ($noUpdates) {
 			$server->getLogger()->notice(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::GREEN . "No updates found. Enjoy!");
 		} else {
-			$server->getLogger()->warning(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::AQUA . "A new latest version of Zuri is released! (" . $publishTime . ")");
+			$server->getLogger()->warning(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::AQUA . "A new latest version of ZuriLite is released! (" . $publishTime . ")");
 			$server->getLogger()->warning(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::AQUA . "Current Version: v" . $this->currentVersion);
 			$server->getLogger()->warning(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::AQUA . "Latest Version: " . $ver . " (" . $branch . ")");
 			$server->getLogger()->warning(ConfigManager::getData(ConfigPaths::PREFIX) . " " . TextFormat::AQUA . "Download Count: " . $dlcount);

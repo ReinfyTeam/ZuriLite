@@ -22,11 +22,11 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\utils\discord;
+namespace ReinfyTeam\ZuriLite\utils\discord;
 
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\thread\NonThreadSafeValue;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function curl_close;
 use function curl_exec;
 use function curl_getinfo;
@@ -61,7 +61,7 @@ class WebhookSendTask extends AsyncTask {
 	public function onCompletion() : void {
 		$response = $this->getResult();
 		if (!in_array($response[1], [200, 204], true)) {
-			ZuriAC::getInstance()->getLogger()->debug("[Discord] [ERROR]: An error occured while sending to discord ({$response[1]}): " . $response[0]);
+			ZuriLiteAC::getInstance()->getLogger()->debug("[Discord] [ERROR]: An error occured while sending to discord ({$response[1]}): " . $response[0]);
 		}
 	}
 }

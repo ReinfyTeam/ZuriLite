@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\listener;
+namespace ReinfyTeam\ZuriLite\listener;
 
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
@@ -35,10 +35,10 @@ use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\events\CaptchaEvent;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\utils\discord\Discord;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\events\CaptchaEvent;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\utils\discord\Discord;
 
 class ServerListener implements Listener {
 	private array $ip = [];

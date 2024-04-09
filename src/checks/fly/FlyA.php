@@ -22,11 +22,11 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\checks\fly;
+namespace ReinfyTeam\ZuriLite\checks\fly;
 
 use pocketmine\network\mcpe\protocol\DataPacket;
-use ReinfyTeam\Zuri\checks\Check;
-use ReinfyTeam\Zuri\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\checks\Check;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
 use function microtime;
 
 class FlyA extends Check {
@@ -36,22 +36,6 @@ class FlyA extends Check {
 
 	public function getSubType() : string {
 		return "A";
-	}
-
-	public function ban() : bool {
-		return false;
-	}
-
-	public function kick() : bool {
-		return true;
-	}
-
-	public function flag() : bool {
-		return false;
-	}
-
-	public function captcha() : bool {
-		return false;
 	}
 
 	public function maxViolations() : int {

@@ -22,18 +22,19 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\ZuriLite\checks\scaffold;
+namespace ReinfyTeam\ZuriLite\checks\killaura;
 
-use pocketmine\block\BlockTypeIds;
-use pocketmine\event\block\BlockPlaceEvent;
-use pocketmine\event\Event;
+use pocketmine\math\Facing;
+use pocketmine\network\mcpe\protocol\DataPacket;
+use pocketmine\network\mcpe\protocol\PlayerActionPacket;
+use pocketmine\network\mcpe\protocol\types\PlayerAction;
 use ReinfyTeam\ZuriLite\checks\Check;
 use ReinfyTeam\ZuriLite\player\PlayerAPI;
-use function abs;
+use function in_array;
 
-class ScaffoldA extends Check {
+class KillAuraA extends Check {
 	public function getName() : string {
-		return "Scaffold";
+		return "KillAura";
 	}
 
 	public function getSubType() : string {
@@ -41,23 +42,19 @@ class ScaffoldA extends Check {
 	}
 
 	public function maxViolations() : int {
-		return 2;
+		return 5;
 	}
 
-	public function checkEvent(Event $event, PlayerAPI $playerAPI) : void {
-		if ($event instanceof BlockPlaceEvent) {
-			$block = $event->getBlockAgainst();
-			$posBlock = $block->getPosition();
-			$player = $playerAPI->getPlayer();
-			$loc = $player->getLocation();
-			$itemHand = $playerAPI->getInventory()->getItemInHand();
-			if ($itemHand->getTypeId() === BlockTypeIds::AIR) {
-				$x = abs($posBlock->getX() - $loc->getX());
-				$y = abs($posBlock->getY() - $loc->getY());
-				$z = abs($posBlock->getZ() - $loc->getZ());
-				$this->debug($playerAPI, "x=$x, y=$y, z=$z");
-				if ($x > 1.0 || $y > 1.0 || $z > 1.0) {
-					$this->failed($playerAPI);
+	public function check(DataPacket $packet, PlayerAPI $playerAPI) : void {
+		if ($packet instanceof PlayerActionPacket) {
+			if (in_array($packet->action, [PlayerAction::START_BREAK, PlayerAction::ABORT_BREAK, PlayerAction::CONTINUE_DESTROY_BLOCK, PlayerAction::INTERACT_BLOCK], true)) {
+				switch($packet->face) {
+					case Facing::UP:
+					case Facing::DOWN:
+					case Facing::EAST:
+					case Facing::NORTH:
+						$this->failed($playerAPI);
+						break;
 				}
 			}
 		}

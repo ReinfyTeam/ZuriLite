@@ -22,21 +22,20 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\Zuri\checks;
+namespace ReinfyTeam\ZuriLite\checks;
 
 use pocketmine\console\ConsoleCommandSender;
 use pocketmine\event\Event;
 use pocketmine\network\mcpe\protocol\DataPacket;
 use pocketmine\utils\TextFormat;
-use ReinfyTeam\Zuri\config\ConfigManager;
-use ReinfyTeam\Zuri\events\api\CheckFailedEvent;
-use ReinfyTeam\Zuri\events\BanEvent;
-use ReinfyTeam\Zuri\events\KickEvent;
-use ReinfyTeam\Zuri\events\ServerLagEvent;
-use ReinfyTeam\Zuri\player\PlayerAPI;
-use ReinfyTeam\Zuri\task\ServerTickTask;
-use ReinfyTeam\Zuri\utils\ReplaceText;
-use ReinfyTeam\Zuri\ZuriAC;
+use ReinfyTeam\ZuriLite\config\ConfigManager;
+use ReinfyTeam\ZuriLite\events\BanEvent;
+use ReinfyTeam\ZuriLite\events\KickEvent;
+use ReinfyTeam\ZuriLite\events\ServerLagEvent;
+use ReinfyTeam\ZuriLite\player\PlayerAPI;
+use ReinfyTeam\ZuriLite\task\ServerTickTask;
+use ReinfyTeam\ZuriLite\utils\ReplaceText;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use function in_array;
 use function microtime;
 use function strtolower;
@@ -50,13 +49,17 @@ abstract class Check extends ConfigManager {
 		return self::getData(self::CHECK . "." . strtolower($this->getName()) . ".enable");
 	}
 
-	public abstract function ban() : bool;
+	public function ban() : bool {
+		return self::getData(self::CHECK . "." . strtolower($this->getName()) . ".ban");
+	}
 
-	public abstract function kick() : bool;
+	public function kick() : bool {
+		return self::getData(self::CHECK . "." . strtolower($this->getName()) . ".kick");
+	}
 
-	public abstract function flag() : bool;
-
-	public abstract function captcha() : bool;
+	public function flag() : bool {
+		return self::getData(self::CHECK . "." . strtolower($this->getName()) . ".flag");
+	}
 
 	public abstract function maxViolations() : int;
 
@@ -97,7 +100,7 @@ abstract class Check extends ConfigManager {
 		$maxViolations = self::getData(self::CHECK . "." . strtolower($this->getName()) . ".maxvl");
 		$playerAPI->addViolation($this->getName());
 		$reachedMaxRealViolations = $playerAPI->getRealViolation($this->getName()) > $maxViolations;
-		$server = ZuriAC::getInstance()->getServer();
+		$server = ZuriLiteAC::getInstance()->getServer();
 
 		if (self::getData(self::WORLD_BYPASS_ENABLE) === true) {
 			if (strtolower(self::getData(self::WORLD_BYPASS_MODE)) === "blacklist") {
@@ -111,25 +114,18 @@ abstract class Check extends ConfigManager {
 			}
 		}
 
-
-		$checkEvent = new CheckFailedEvent($playerAPI, $this->getName(), $this->getSubType());
-		$checkEvent->call();
-		if ($checkEvent->isCancelled()) {
-			return false;
-		}
-
 		if ($reachedMaxViolations) {
 			$playerAPI->addRealViolation($this->getName());
-			ZuriAC::getInstance()->getServer()->getLogger()->info(ReplaceText::replace($playerAPI, self::getData(self::ALERTS_MESSAGE), $this->getName(), $this->getSubType()));
-			foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+			ZuriLiteAC::getInstance()->getServer()->getLogger()->info(ReplaceText::replace($playerAPI, self::getData(self::ALERTS_MESSAGE), $this->getName(), $this->getSubType()));
+			foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 				if ($p->hasPermission("zuri.admin")) {
 					$p->sendMessage(ReplaceText::replace($playerAPI, self::getData(self::ALERTS_MESSAGE), $this->getName(), $this->getSubType()));
 				}
 			}
 		} else {
 			if ($detectionsAllowedToSend) {
-				ZuriAC::getInstance()->getServer()->getLogger()->info(ReplaceText::replace($playerAPI, self::getData(self::DETECTION_MESSAGE), $this->getName(), $this->getSubType()));
-				foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+				ZuriLiteAC::getInstance()->getServer()->getLogger()->info(ReplaceText::replace($playerAPI, self::getData(self::DETECTION_MESSAGE), $this->getName(), $this->getSubType()));
+				foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 					if ($p->hasPermission("zuri.admin")) {
 						$p->sendMessage(ReplaceText::replace($playerAPI, self::getData(self::DETECTION_MESSAGE), $this->getName(), $this->getSubType()));
 					}
@@ -152,8 +148,8 @@ abstract class Check extends ConfigManager {
 
 		if ($reachedMaxRealViolations && $reachedMaxViolations && $this->ban() && self::getData(self::BAN_ENABLE) === true) {
 			(new BanEvent($playerAPI, $this->getName(), $this->getSubType()))->ban();
-			ZuriAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::BAN_MESSAGE), $this->getName(), $this->getSubType()));
-			foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+			ZuriLiteAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::BAN_MESSAGE), $this->getName(), $this->getSubType()));
+			foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 				if ($p->hasPermission("zuri.admin")) {
 					$p->sendMessage(ReplaceText::replace($playerAPI, self::getData(self::BAN_MESSAGE), $this->getName(), $this->getSubType()));
 				}
@@ -170,10 +166,10 @@ abstract class Check extends ConfigManager {
 		if ($reachedMaxRealViolations && $reachedMaxViolations && $this->kick() && self::getData(self::KICK_ENABLE) === true) {
 			(new KickEvent($playerAPI, $this->getName(), $this->getSubType()))->kick();
 			if (self::getData(self::KICK_COMMANDS_ENABLED) === true) {
-				ZuriAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
+				ZuriLiteAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
 				$playerAPI->resetViolation($this->getName());
 				$playerAPI->resetRealViolation($this->getName());
-				foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+				foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 					if ($p->hasPermission("zuri.admin")) {
 						$p->sendMessage(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
 					}
@@ -182,43 +178,19 @@ abstract class Check extends ConfigManager {
 					$server->dispatchCommand(new ConsoleCommandSender($server, $server->getLanguage()), ReplaceText::replace($playerAPI, $command, $this->getName(), $this->getSubType()));
 				}
 			} else {
-				ZuriAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
-				foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+				ZuriLiteAC::getInstance()->getServer()->getLogger()->notice(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
+				foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 					if ($p->hasPermission("zuri.admin")) {
 						$p->sendMessage(ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE), $this->getName(), $this->getSubType()));
 					}
 				}
 				$playerAPI->resetViolation($this->getName());
 				$playerAPI->resetRealViolation($this->getName());
-				$player->kick("Unfair Advantage: Zuri Anticheat" /** TODO: Customize logout message? */, null, ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE_UI), $this->getName(), $this->getSubType()));
+				$player->kick("Unfair Advantage: ZuriLite Anticheat" /** TODO: Customize logout message? */, null, ReplaceText::replace($playerAPI, self::getData(self::KICK_MESSAGE_UI), $this->getName(), $this->getSubType()));
 			}
 			return true;
 		}
-
-		if ($reachedMaxRealViolations && $this->captcha() && self::getData(self::CAPTCHA_ENABLE) === true) {
-			$playerAPI->setCaptcha(true);
-			return true;
-		}
-
-
 		return false;
-	}
-
-	/**
-	 * For Login purposes warning system only!
-	 * @internal
-	 */
-	public function warn(string $username) : void {
-		if (!self::getData(self::WARNING_ENABLE)) {
-			return;
-		}
-
-		ZuriAC::getInstance()->getServer()->getLogger()->info(ReplaceText::replace($username, self::getData(self::WARNING_MESSAGE), $this->getName(), $this->getSubType()));
-		foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
-			if ($p->hasPermission("zuri.admin")) {
-				$p->sendMessage(ReplaceText::replace($username, self::getData(self::WARNING_MESSAGE), $this->getName(), $this->getSubType()));
-			}
-		}
 	}
 
 	/**
@@ -233,11 +205,11 @@ abstract class Check extends ConfigManager {
 				$player->sendMessage(self::getData(self::PREFIX) . " " . TextFormat::GRAY . "[DEBUG] " . TextFormat::RED . $this->getName() . TextFormat::GRAY . " (" . TextFormat::YELLOW . $this->getSubType() . TextFormat::GRAY . ") " . TextFormat::AQUA . $text);
 
 				if (self::getData(self::DEBUG_LOG_SERVER)) {
-					ZuriAC::getInstance()->getServer()->getLogger()->notice(self::getData(self::PREFIX) . " " . TextFormat::GRAY . "[DEBUG] " . TextFormat::YELLOW . $playerAPI->getPlayer()->getName() . ": " . TextFormat::RED . $this->getName() . TextFormat::GRAY . " (" . TextFormat::YELLOW . $this->getSubType() . TextFormat::GRAY . ") " . TextFormat::AQUA . $text);
+					ZuriLiteAC::getInstance()->getServer()->getLogger()->notice(self::getData(self::PREFIX) . " " . TextFormat::GRAY . "[DEBUG] " . TextFormat::YELLOW . $playerAPI->getPlayer()->getName() . ": " . TextFormat::RED . $this->getName() . TextFormat::GRAY . " (" . TextFormat::YELLOW . $this->getSubType() . TextFormat::GRAY . ") " . TextFormat::AQUA . $text);
 				}
 
 				if (self::getData(self::DEBUG_LOG_ADMIN)) {
-					foreach (ZuriAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
+					foreach (ZuriLiteAC::getInstance()->getServer()->getOnlinePlayers() as $p) {
 						if ($p->getName() === $playerAPI->getPlayer()->getName()) {
 							continue;
 						} // Skip same player. Prevent spam in the chat history.
