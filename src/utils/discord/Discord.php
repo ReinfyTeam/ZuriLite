@@ -26,7 +26,7 @@ namespace ReinfyTeam\ZuriLite\utils\discord;
 
 use DateTime;
 use pocketmine\utils\Config;
-use ReinfyTeam\ZuriLite\APIProvider;
+use ReinfyTeam\ZuriLite\ZuriLiteAC;
 use ReinfyTeam\ZuriLite\config\ConfigManager;
 use ReinfyTeam\ZuriLite\player\PlayerAPI;
 use ReinfyTeam\ZuriLite\utils\ReplaceText;
@@ -135,7 +135,7 @@ class Discord extends ConfigManager {
 	}
 
 	public static function getWebhookConfig() : Config {
-		return self::$config ??= new Config(APIProvider::getInstance()->getDataFolder() . "webhook.yml", Config::YAML);
+		return self::$config ??= new Config(ZuriLiteAC::getInstance()->getDataFolder() . "webhook.yml", Config::YAML);
 	}
 
 	public static function textToHex(string $hex) : mixed {
