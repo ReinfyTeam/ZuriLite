@@ -5,7 +5,7 @@
 zuri:
     prefix: "§7(§e§lZuri§bLite§r§7) §8>§r"
     # Configuration version, PLEASE DO NOT MODIFY IT UNLESS A DEVELOPER TOLD  YOU TO CHANGE THIS!
-    version: "0.0.1"
+    version: "0.0.2"
     ping:
         #This is a customization that helps Zuri test the best cheating players.
         #This is the buyer's discretion if you have custom errors with your server we will not be responsible.
@@ -128,6 +128,12 @@ zuri:
               kick: true
               flag: false
          phase:
+              enable: true
+              maxvl: 1
+              ban: false
+              kick: true
+              flag: false
+         velocity:
               enable: true
               maxvl: 1
               ban: false

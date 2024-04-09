@@ -22,20 +22,18 @@
 
 declare(strict_types=1);
 
-namespace ReinfyTeam\ZuriLite\checks\killaura;
+namespace ReinfyTeam\ZuriLite\checks\velocity;
 
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Event;
-use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 use ReinfyTeam\ZuriLite\checks\Check;
 use ReinfyTeam\ZuriLite\player\PlayerAPI;
 use ReinfyTeam\ZuriLite\utils\MathUtil;
-use function count;
 
-class KillAuraB extends Check {
+class VelocityB extends Check {
 	public function getName() : string {
-		return "KillAura";
+		return "Velocity";
 	}
 
 	public function getSubType() : string {
@@ -46,43 +44,57 @@ class KillAuraB extends Check {
 		return false;
 	}
 
+	public function kick() : bool {
+		return true;
+	}
+
+	public function flag() : bool {
+		return false;
+	}
+
+	public function captcha() : bool {
+		return false;
+	}
+
 	public function maxViolations() : int {
-		return 3;
+		return 5;
 	}
 
 	public function checkJustEvent(Event $event) : void {
 		if ($event instanceof EntityDamageByEntityEvent) {
 			$entity = $event->getEntity();
-			$damager = $event->getDamager();
-			$locDamager = $damager->getLocation();
-			if ($damager === null) {
-				return;
-			}
-			if ($damager instanceof Player) {
-				$playerAPI = PlayerAPI::getAPIPlayer($damager);
+			if ($entity instanceof Player) {
+				$playerAPI = PlayerAPI::getAPIPlayer($entity);
 				$player = $playerAPI->getPlayer();
 				if ($player === null) {
 					return;
 				}
-				$delta = MathUtil::getDeltaDirectionVector($playerAPI, 3);
-				$from = new Vector3($locDamager->getX(), $locDamager->getY() + $damager->getEyeHeight(), $locDamager->getZ());
-				$to = $damager->getLocation()->add($delta->getX(), $delta->getY() + $damager->getEyeHeight(), $delta->getZ());
-				$distance = MathUtil::distance($from, $to);
-				$vector = $to->subtract($from->x, $from->y, $from->z)->normalize()->multiply(1);
-				$entities = [];
-				for ($i = 0; $i <= $distance; $i += 1) {
-					$from = $from->add($vector->x, $vector->y, $vector->z);
-					foreach ($damager->getWorld()->getEntities() as $target) {
-						$distanceA = new Vector3($from->x, $from->y, $from->z);
-						if ($target->getPosition()->distance($distanceA) <= 2.6) {
-							$entities[$target->getId()] = $target;
-						}
+				$loc = $player->getLocation();
+				$lastLoc = $playerAPI->getExternalData("lastVLocB");
+
+				if ( // prevent false-positive
+					$playerAPI->isInWeb() ||
+					!$playerAPI->isOnGround() ||
+					$playerAPI->isOnAdhesion() ||
+					!$entity->isOnGround() ||
+					$player->getAllowFlight() ||
+					$player->hasNoClientPredictions() ||
+					$player->isFlying() ||
+					$playerAPI->isInBoxBlock()
+				) {
+					return;
+				}
+
+				if ($lastLoc !== null) {
+					$velocity = MathUtil::distance($loc->asVector3(), $lastLoc->asVector3());
+					if ($velocity < 0.6 && $playerAPI->getPing() < self::getData(self::PING_LAGGING)) {
+						$this->failed($playerAPI);
 					}
+					$this->debug($playerAPI, "velocity=$velocity");
+					$playerAPI->unsetExternalData("lastVLocB");
+				} else {
+					$playerAPI->setExternalData("lastVLocB", $loc);
 				}
-				if (!isset($entities[$entity->getId()])) {
-					$this->failed($playerAPI);
-				}
-				$this->debug($playerAPI, "delta=$delta, distance=$distance, entities=" . count($entities));
 			}
 		}
 	}

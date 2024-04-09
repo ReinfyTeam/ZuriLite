@@ -97,6 +97,8 @@ class ZuriLiteAC extends PluginBase {
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\scaffold\ScaffoldC();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\speed\SpeedA();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\speed\SpeedB();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\velocity\VelocityA();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\velocity\VelocityB();
 	}
 
 	public static function Checks() : array {
