@@ -51,12 +51,9 @@ final class FormSender extends ConfigManager {
 					self::ManageModules($player);
 					break;
 				case 1:
-					self::ModifyCaptcha($player);
-					break;
-				case 2:
 					self::ChangePunishment($player);
 					break;
-				case 3:
+				case 2:
 					self::AdvanceTools($player);
 					break;
 			}
@@ -65,7 +62,6 @@ final class FormSender extends ConfigManager {
 		$form->setTitle("ZuriLite AdminUI Manager");
 		$form->setContent("Choose what do you want to set..");
 		$form->addButton("Manage Modules");
-		$form->addButton("Modify Captcha");
 		$form->addButton("Change Punishment");
 		$form->addButton("Advance Tools");
 		$player->sendForm($form);
@@ -97,35 +93,6 @@ final class FormSender extends ConfigManager {
 		$form->addButton("Enable/Disable Modules");
 		$form->addButton("Module Information");
 		$form->addButton("Reload all modules");
-		$player->sendForm($form);
-	}
-
-	public static function ModifyCaptcha(Player $player) : void {
-		$form = new SimpleForm(function(Player $player, $data) {
-			if ($data === null) {
-				self::MainUI($player);
-				return;
-			}
-
-			switch($data) {
-				case 0:
-					self::setData(self::CAPTCHA_ENABLE, !self::getData(self::CAPTCHA_ENABLE));
-					self::ModifyCaptcha($player);
-					break;
-				case 1:
-					self::AdjustCodeLength($player);
-					break;
-				case 2:
-					self::ModifySendType($player);
-					break;
-			}
-		});
-
-		$form->setTitle("Modify Captcha");
-		$form->setContent("Choose what do you want to modify..");
-		$form->addButton("Status: " . (self::getData(self::CAPTCHA_ENABLE) ? TextFormat::GREEN . "Enabled" : TextFormat::RED . "Disabled"));
-		$form->addButton("Adjust Code Length");
-		$form->addButton("Modify send type");
 		$player->sendForm($form);
 	}
 
@@ -179,9 +146,6 @@ final class FormSender extends ConfigManager {
 					PlayerAPI::getAPIPlayer($player)->setDebug(!PlayerAPI::getAPIPlayer($player)->isDebug());
 					break;
 				case 1:
-					self::setData(self::PROXY_ENABLE, !self::getData(self::PROXY_ENABLE));
-					break;
-				case 2:
 					self::setData(self::DISCORD_ENABLE, !self::getData(self::DISCORD_ENABLE));
 					break;
 			}
@@ -192,7 +156,6 @@ final class FormSender extends ConfigManager {
 		$form->setTitle("Advance Tools");
 		$form->setContent("Choose what do you want to select..");
 		$form->addButton("Debug Mode: " . (PlayerAPI::getAPIPlayer($player)->isDebug() ? TextFormat::GREEN . "Enabled" : TextFormat::RED . "Disabled"));
-		$form->addButton("Proxy: " . (self::getData(self::PROXY_ENABLE) ? TextFormat::GREEN . "Enabled" : TextFormat::RED . "Disabled"));
 		$form->addButton("Discord Webhook: " . (self::getData(self::DISCORD_ENABLE) ? TextFormat::GREEN . "Enabled" : TextFormat::RED . "Disabled"));
 		$player->sendForm($form);
 	}
