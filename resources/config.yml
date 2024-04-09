@@ -5,7 +5,7 @@
 zuri:
     prefix: "§7(§e§lZuri§bLite§r§7) §8>§r"
     # Configuration version, PLEASE DO NOT MODIFY IT UNLESS A DEVELOPER TOLD  YOU TO CHANGE THIS!
-    version: "0.0.2"
+    version: "0.0.3"
     ping:
         #This is a customization that helps Zuri test the best cheating players.
         #This is the buyer's discretion if you have custom errors with your server we will not be responsible.
@@ -54,6 +54,10 @@ zuri:
     # You can find all instructions on github wiki. You can modify webhook send embeds in "webhook.yml".
     discord:
         enable: false # Should discord webhooks are enabled in the server?
+    debug:
+        enable: true # Allow debugging checks: (/zuri debug)
+        log-admin: true # Send to admin their data... Might to cause lag if enabled... Only works if player is in debug mode!
+        log-server: false # Log to server, Might to cause lag if enabled... Only works if player is in debug mode also!
     checks:
          speed:
               enable: true

@@ -73,7 +73,7 @@ class ZuriLiteAC extends PluginBase {
 		if (!empty($this->checks)) {
 			$this->checks = [];
 		}
-		// TODO: Add all working properly checks in original Zuri..
+		// TODO: Add all working properly checks from original Zuri..
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\autoclick\AutoClickA();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\autoclick\AutoClickB();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\autoclick\AutoClickC();
