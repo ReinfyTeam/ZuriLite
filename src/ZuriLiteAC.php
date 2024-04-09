@@ -83,6 +83,7 @@ class ZuriLiteAC extends PluginBase {
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\behaivor\EditionFaker();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\behaivor\ProxyBot();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\behaivor\AntiBot();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\behaivor\Phase();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyA();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyB();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyC();
