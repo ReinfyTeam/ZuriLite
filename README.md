@@ -1,3 +1,7 @@
+Discontinued due to maintain [Zuri](https://github.com/ReinfyTeam/Zuri) compability checks. You may update this plugin according to your choice but i do not anymore update this plugin since i cannot maintain this repository, so freely to use this and rewrite the code.
+
+<hr>
+
 # Zuri Lite Anticheat  ✔
 - 😁 Compared to [Zuri](https://github.com/ReinfyTeam/Zuri) it is easy to configure, easy to manage, and lightweight and customized for **Practice Servers**.
 - 😎 It has limited checks, optimized for combat-relative servers.
