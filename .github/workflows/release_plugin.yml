@@ -1,4 +1,4 @@
-name: Release Plugin
+name: Release
 run-name: Build Zuri.phar and Draft a release to github!
 on:
   push:
