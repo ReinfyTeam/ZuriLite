@@ -7,20 +7,20 @@ jobs:
    name: Build and validate plugin
    runs-on: ubuntu-latest
    steps:
-     - name: Checkout the repository.
+     - name: Check out repository source
        uses: actions/checkout@v4
-     - name: Download php-binaries.
+     - name: Download PHP runtime binaries
        run: "curl -sL https://github.com/pmmp/PHP-Binaries/releases/latest/download/PHP-Linux-x86_64-PM5.tar.gz -o php.tar.gz"
-     - name: Extract php-binaries.
+     - name: Extract PHP runtime binaries
        run: "tar -xvzf php.tar.gz"
-     - name: chmod the php-binaries.
+     - name: Make PHP runtime executable
        run: "chmod +x ./bin/php7/bin/php"
-     - name: Fix opcache.so
+     - name: Configure the OPcache extension path
        run: EXTENSION_DIR=$(find "$(pwd)/bin" -name "*debug-zts*") \
             grep -q '^extension_dir' bin/php7/bin/php.ini && sed -i'bak' "s{^extension_dir=.*{extension_dir=\"$EXTENSION_DIR\"{" bin/php7/bin/php.ini || echo "extension_dir=\"$EXTENSION_DIR\"" >> bin/php7/bin/php.ini
-     - name: Install php-cs-fixer.
+     - name: Download PHP-CS-Fixer
        run: "curl -sL https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/releases/latest/download/php-cs-fixer.phar -o php-cs-fixer.phar"
-     - name: Run php-cs-fixer.
+     - name: Apply PHP code style
        run: "./bin/php7/bin/php php-cs-fixer.phar fix src"
      - name: Build plugin PHAR
        run: "./bin/php7/bin/php -dphar.readonly=0 tools/build.php"
@@ -29,5 +29,5 @@ jobs:
        with:
           name: ZuriLite.phar
           path: ZuriLite.phar
-     - name: Codespace Cleanup
+     - name: Remove temporary build files
        run: "rm -rf *"
