@@ -6,7 +6,7 @@ jobs:
  build-phar:
    name: Build release plugin PHAR
    runs-on: ubuntu-latest
-   if: contains(github.event.head_commit.message, 'Release')
+   if: startsWith(github.event.head_commit.message, 'Release ')
    steps:
      - name: Check out repository source
        uses: actions/checkout@v4
@@ -40,6 +40,7 @@ jobs:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
      - name: Upload plugin release asset
        id: upload-release-asset 
+       if: steps.create_release.outputs.upload_url != ''
        continue-on-error: true
        uses: actions/upload-release-asset@v1
        env:
