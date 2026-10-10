@@ -1,5 +1,4 @@
 name: Publish plugin release
-run-name: Build Zuri.phar and Draft a release to github!
 on:
   push:
   workflow_dispatch:
