@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
  build-phar:
-   name: Build plugin PHAR
+   name: Build release plugin PHAR
    runs-on: ubuntu-latest
    if: contains(github.event.head_commit.message, 'Release')
    steps:
