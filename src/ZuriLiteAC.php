@@ -87,9 +87,9 @@ class ZuriLiteAC extends PluginBase {
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyA();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyB();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\fly\FlyC();
-		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillauraA();
-		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillauraB();
-		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillauraC();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillAuraA();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillAuraB();
+		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\killaura\KillAuraC();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\reach\ReachA();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\reach\ReachB();
 		$this->checks[] = new \ReinfyTeam\ZuriLite\checks\scaffold\ScaffoldA();
