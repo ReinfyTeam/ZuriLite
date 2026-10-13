@@ -9,7 +9,7 @@ jobs:
    if: startsWith(github.event.head_commit.message, 'Release ')
    steps:
      - name: Check out repository source
-       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
      - name: Download PHP runtime binaries
        run: "curl -sL https://github.com/pmmp/PHP-Binaries/releases/download/php-build-524/PHP-8.4-Linux-x86_64-PM5.tar.gz -o php.tar.gz"
      - name: Extract PHP runtime binaries

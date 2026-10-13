@@ -8,7 +8,7 @@ jobs:
    runs-on: ubuntu-latest
    steps:
      - name: Check out repository source
-       uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
      - name: Download PHP runtime binaries
        run: "curl -sL https://github.com/pmmp/PHP-Binaries/releases/download/php-build-524/PHP-8.4-Linux-x86_64-PM5.tar.gz -o php.tar.gz"
      - name: Extract PHP runtime binaries
@@ -25,7 +25,7 @@ jobs:
      - name: Build plugin PHAR
        run: "./bin/php7/bin/php -dphar.readonly=0 tools/build.php"
      - name: Upload plugin PHAR artifact
-       uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+       uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
        with:
           name: ZuriLite.phar
           path: ZuriLite.phar
