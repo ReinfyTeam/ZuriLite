@@ -33,7 +33,7 @@ Individual checks can be enabled or disabled in the `zuri.checks` section. Each 
 3. Start the server and review the log for successful plugin enablement.
 4. Review `plugin_data/ZuriLite/config.yml` and `plugin_data/ZuriLite/webhook.yml` before enabling punishments or Discord notifications.
 
-The plugin is version `1.0.0` in the current manifest. There is no claim here that a current GitHub release or client matrix exists; verify the exact artifact and target server separately.
+The plugin is version `1.0.0` in the current manifest. A stable [`v1.0.0` GitHub release](https://github.com/ReinfyTeam/ZuriLite/releases/tag/v1.0.0) is available, but its artifact targets an earlier source commit; verify the exact artifact and target server separately because no complete client compatibility matrix is claimed.
 
 ## Administration command
 
