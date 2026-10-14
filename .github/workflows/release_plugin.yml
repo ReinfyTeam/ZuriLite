@@ -27,7 +27,6 @@ jobs:
        run: "./bin/php7/bin/php -dphar.readonly=0 tools/build.php"
      - uses: ChanTsune/release-with-commit@b69c964230156ed249f2d503dbe0db5ee36529b9
        id: create_release
-       continue-on-error: true
        with:
           regexp: "Release (\\d+([.]\\d+)*)\n*((\\s|\\S)+)"
           regexp_options: "us"
@@ -41,7 +40,6 @@ jobs:
      - name: Upload plugin release asset
        id: upload-release-asset 
        if: steps.create_release.outputs.upload_url != ''
-       continue-on-error: true
        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5
        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
