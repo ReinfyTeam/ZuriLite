@@ -5,10 +5,10 @@ on:
 jobs:
  build-phar:
    name: Build and validate ZuriLite plugin
-   runs-on: ubuntu-latest
+   runs-on: ubuntu-24.04
    steps:
      - name: Check out repository source
-       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+       uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a
      - name: Download PHP runtime binaries
        run: "curl -sL https://github.com/pmmp/PHP-Binaries/releases/download/php-build-524/PHP-8.4-Linux-x86_64-PM5.tar.gz -o php.tar.gz"
      - name: Extract PHP runtime binaries
