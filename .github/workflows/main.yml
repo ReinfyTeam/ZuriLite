@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
  build-phar:
-   name: Build and validate plugin
+   name: Build and validate ZuriLite plugin
    runs-on: ubuntu-latest
    steps:
      - name: Check out repository source
