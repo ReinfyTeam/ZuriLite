@@ -233,7 +233,14 @@ class PlayerListener implements Listener {
 		if ($player === null) {
 			return;
 		}
-		//TODO
+		$playerAPI = PlayerAPI::getAPIPlayer($player);
+		if ($playerAPI->getPlayer() === null) {
+			return;
+		}
+		if (!$player->isConnected() && !$player->spawned) {
+			return;
+		}
+		$this->checkEvent($event, $playerAPI);
 	}
 
 
